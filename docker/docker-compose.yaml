@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+    nginx:
+        build: ./nginx
+        restart: always
+        environment:
+            - development
+        volumes:
+            - ./nginx/conf/vps:/etc/nginx/conf.d:ro
+            - ../src/_www:/xrosy/_www
+        expose:
+            - "80"
+            - "8080"
+        ports:
+            - "80:80"
+            - "443:443"
+
+    bioAdmin:
+        image: node:alpine
+        depends_on:
+            - nginx
