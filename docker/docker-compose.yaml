@@ -8,7 +8,7 @@ services:
             - development
         volumes:
             - ./nginx/conf/vps:/etc/nginx/conf.d:ro
-            - ../src/_www:/xrosy/_www
+            - ../src/_www:/xrosy/src/_www
         expose:
             - "80"
             - "8080"
@@ -16,7 +16,7 @@ services:
             - "80:80"
             - "443:443"
 
-    bioAdmin:
-        image: node:alpine
-        depends_on:
-            - nginx
+    # bioAdmin:
+    #     image: node:alpine
+    #     depends_on:
+    #         - nginx
