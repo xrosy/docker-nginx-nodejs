@@ -6,69 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
-/*
-        @font-face {
-            font-family: 'soul';
-            src: url('/fonts/soul-puddle.ttf')format('truetype');
-            font-weight: normal;
-            font-style: normal
-        }
-*/
-        html {
-            background-color: #FFF
-        }
-
-        html {
-            user-select: none;
-            cursor: default
-        }
+        html, body { user-select: none; cursor: default; background-color: #FFF; }
 
         .container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
+            display    : block;
+            box-sizing : border-box;
+            position   : fixed;
+            left       : 50%;
+            top        : 37.5%;
+            width      : 320px;
+            transform  : translate(-50%, -50%);
+            color      : #777;
+            font-size  : 18px;
+            font-family: Arial, sans-serif;
+        }
+        .container::before {
+            content  : '';
+            display  : block;
+            width    : 40%;
+            padding-top: 30%;
+            position : absolute;
+            z-index  : 1;
+            left     : 50%;
+            top      : 50%;
             transform: translate(-50%, -50%);
-            margin: auto;
-            width: 600px;
-            display: table-row;
-            font-size: 30px;
-            overflow: hidden
+            border: 5px solid #ACACAC;
+            border-radius: 100%;
         }
 
         .cell {
-            display: table-cell;
+            display       : inline-block;
+            width         : 25%;
+            text-align    : center;
             vertical-align: middle;
-            color: #777;
-            width: 150px;
-            text-align: center;
-            font-family: Arial, sans-serif
         }
 
         .cell.wrapper {
-            position: relative;
-            font-family: 'soul', Arial, 'Arial Narrow', sans-serif;
-            padding: 0pt;
-            width: 300px;
-            height: 300px;
-            color: #888;
-            font-size: 130px;
-            text-align: center;
-            border-radius: 100%;
-            border: 6pt solid#444;
-            letter-spacing: 0px;
-            text-indent: 0px
+            position : relative;
+            z-index  : 2;
+            width    : 50%;
+            font-size: 230%;
+            letter-spacing: 4px;
         }
-
     </style>
 </head>
 
 <body>
     <div class="container">
-        <span class="cell">ERROR</span>
-        <span class="cell wrapper">
-            <span>4</span><span>0</span><span>3</span>
-        </span>
-        <span class="cell">ACCESS</span>
+        <span class="cell">ERROR</span><span class="cell wrapper">403</span><span class="cell">FOUND</span>
     </div>
 </body>
 
