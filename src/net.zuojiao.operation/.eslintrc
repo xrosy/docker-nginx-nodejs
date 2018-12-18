@@ -1,0 +1,6 @@
+{
+    "extends": "zals",
+    "rules": {
+        "no-console": [0]
+    }
+}

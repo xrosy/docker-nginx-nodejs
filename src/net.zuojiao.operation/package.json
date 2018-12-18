@@ -1,0 +1,29 @@
+{
+    "name": "zls-operation",
+    "version": "18.12.18.001",
+    "author": "Jason`C <jason@chenzhenyuan.com>",
+    "license": "MIT",
+    "private": true,
+    "main": "",
+    "scripts": {},
+    "devDependencies": {
+        "@babel/core": "^7.2.2",
+        "@babel/preset-env": "^7.2.0",
+        "@babel/preset-react": "^7.0.0",
+        "babel-loader": "^8.0.4",
+        "eslint-config-zals": "^0.0.25",
+        "html-loader": "^0.5.5",
+        "html-webpack-plugin": "^3.2.0",
+        "webpack": "^4.27.1",
+        "webpack-cli": "^3.1.2"
+    },
+    "dependencies": {
+        "@babel/polyfill": "^7.0.0",
+        "react": "^16.4.2",
+        "react-dom": "^16.4.2",
+        "react-router": "^4.3.1",
+        "react-router-config": "^1.0.0-beta.4",
+        "react-router-dom": "^4.3.1",
+        "react-router-redux": "^4.0.8"
+    }
+}
