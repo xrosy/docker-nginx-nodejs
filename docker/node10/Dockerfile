@@ -7,7 +7,7 @@ EXPOSE 3000
 
 STOPSIGNAL SIGTERM
 
-VOLUME [ "/xrosy/net.zuojiao.operation" ]
+# VOLUME [ "/xrosy/net.zuojiao.operation" ]
 
 WORKDIR /xrosy/net.zuojiao.operation
 
