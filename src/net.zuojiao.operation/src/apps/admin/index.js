@@ -1,6 +1,10 @@
 import React    from 'react';
 import ReactDOM from 'react-dom';
+import Main     from './index.jsx';
+import './index.less';
+
+
 
 const appContainerElement = document.getElementById('appRoot');
 
-ReactDOM.render(null, appContainerElement);
+ReactDOM.render(<Main />, appContainerElement);
