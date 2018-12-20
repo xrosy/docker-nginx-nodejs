@@ -2,21 +2,25 @@ version: '3'
 
 services:
     nginx:
+        container_name: nginx
         build: ./docker/nginx
+        restart: always
+        volumes:
+            - ./docker/nginx/conf/vps:/etc/nginx/conf.d:ro
+            - ./src:/xrosy/src:ro
+        ports:
+            - "80:80"
+            - "443:443"
+        links:
+            - node10
+
+    node10:
+        container_name: node10
+        build: ./docker/node10
         restart: always
         environment:
             - development
         volumes:
-            - ./docker/nginx/conf/vps:/etc/nginx/conf.d:ro
-            - ./src/_www:/xrosy/src/_www:ro
+            - ./src/net.zuojiao.operation:/xrosy/net.zuojiao.operation
         expose:
-            - "80"
-            - "8080"
-        ports:
-            - "80:80"
-            - "443:443"
-
-    # bioAdmin:
-    #     image: node:alpine
-    #     depends_on:
-    #         - nginx
+            - '3000'
