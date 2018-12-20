@@ -7,12 +7,17 @@ const ExtractTextPlugin  = require('extract-text-webpack-plugin');
 
 
 const absPath = (vp) => path.resolve(__dirname, vp ? vp : '.');
-
+const envStr = process.env.NODE_ENV || 'dev';
 
 module.exports = {
     mode  : 'none',
     entry : {
-        admin : absPath('./src/apps/admin/index.js'),
+        admin : [
+            'babel-polyfill',
+            'react-hot-loader/patch',
+            'webpack-hot-middleware/client',
+            absPath('./src/apps/admin/index.js'),
+        ],
     },
 
     output : {
@@ -21,6 +26,8 @@ module.exports = {
     },
 
     plugins : [
+        new webpack.HotModuleReplacementPlugin(),
+
         new CleanWebpackPlugin([ 'dist' ]),
 
         new ExtractTextPlugin('static/[name].css'),
@@ -43,9 +50,7 @@ module.exports = {
             {
                 test    : /\.(js|jsx)$/,
                 exclude : /node_modules/,
-                use     : {
-                    loader : 'babel-loader',
-                },
+                use     : [{ loader: 'babel-loader' }],
             },
 
             {
@@ -58,11 +63,7 @@ module.exports = {
 
             {
                 test : /\.(html|htm|tpl)$/,
-                use  : [
-                    {
-                        loader : 'html-loader',
-                    },
-                ],
+                use  : [{ loader: 'html-loader' }],
             },
         ],
     },

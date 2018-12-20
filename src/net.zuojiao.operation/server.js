@@ -1,29 +1,32 @@
-const path        = require('path');
-const webpack     = require('webpack');
-const middleware  = require('webpack-dev-middleware');
-const express     = require('express');
-const consolidate = require('consolidate');
-const webpackConf = require('./webpack.config.js');
-const compiler    = webpack(webpackConf);
-const app         = express();
+const path                 = require('path');
+const webpack              = require('webpack');
+const express              = require('express');
+const consolidate          = require('consolidate');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const webpackConf          = require('./webpack.config.js');
+const compiler             = webpack(webpackConf);
+const app                  = express();
 
 
 app.engine('html', consolidate.lodash);
-app.set('views', '/__www/');
 app.set('view engine', 'html');
 
-const gx = middleware(compiler, {
+app.use(webpackDevMiddleware(compiler, {
     watchOptions : 500,
     quiet        : true,
+    hot          : true,
+}));
+
+app.use(webpackHotMiddleware(compiler));
+
+app.get([ '/' ], (req, res) => {
+    res.render('admin');
 });
 
-app.use(gx);
+// app.get('*', (request, response) => {
+//     response.sendFile(path.resolve(defaultConfig.root, 'index.html'));
+// });
 
-// app.use(hotMiddleware);
-
-app.get([ '/', '/*' ], (req, res) => {
-    res.render('index');
-});
-
-
-app.listen(3000, () => console.log('❤️ 启动成功！端口：3000!'));
+const port = '3000';
+app.listen(port, '0.0.0.0', () => console.log(`❤️ 启动成功！端口：${port}!`));

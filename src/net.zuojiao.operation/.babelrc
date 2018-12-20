@@ -5,6 +5,8 @@
     ],
 
     "plugins": [
+        "react-hot-loader/babel",
+
         [ "import", {
             "libraryName": "antd-mobile",
             "style"      : "css"
