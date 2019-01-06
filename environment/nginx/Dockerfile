@@ -3,7 +3,9 @@ FROM alpine:latest
 
 LABEL maintainer="XRosy-NGINX Docker Maintainers <jason@chenzhenyuan.com>"
 
-ENV NGINX_VERSION 1.15.7
+ENV NGINX_VERSION 1.15.8
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     && CONFIG="\
@@ -61,12 +63,11 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
         pcre-dev \
         zlib-dev \
         linux-headers \
-        curl \
         gnupg1 \
         libxslt-dev \
         gd-dev \
         geoip-dev \
-        nano \
+        curl \
     && curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
     && curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
     && export GNUPGHOME="$(mktemp -d)" \
@@ -99,9 +100,9 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     && make install \
     && rm -rf /etc/nginx/html/ \
     # && mkdir /etc/nginx/conf.d/ \
-    && mkdir -p /usr/share/nginx/html/ \
-    && install -m644 html/index.html /usr/share/nginx/html/ \
-    && install -m644 html/50x.html /usr/share/nginx/html/ \
+    # && mkdir -p /usr/share/nginx/html/ \
+    # && install -m644 html/index.html /usr/share/nginx/html/ \
+    # && install -m644 html/50x.html /usr/share/nginx/html/ \
     && install -m755 objs/nginx-debug /usr/sbin/nginx-debug \
     && install -m755 objs/ngx_http_xslt_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_xslt_filter_module-debug.so \
     && install -m755 objs/ngx_http_image_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_image_filter_module-debug.so \
@@ -132,19 +133,17 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     \
     # Bring in tzdata so users could set the timezones through the environment
     # variables
-    && apk add --no-cache tzdata \
+    && apk add --no-cache tzdata nano curl \
     \
     # forward request and error logs to docker log collector
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-RUN apk add --no-cache --virtual .build-deps curl nano
-
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY _nginx/ /etc/nginx/
 
 EXPOSE 80 443
 
-VOLUME [ "/etc/nginx/conf.d", "/xrosy/_www" ]
+# VOLUME [ "/etc/nginx/conf.d", "/xrosy/_www" ]
 
 STOPSIGNAL SIGTERM
 
