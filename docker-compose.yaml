@@ -17,7 +17,7 @@ services:
     # ======================================
     # - 挂载主机目录
     volumes:
-      - "./environment/com.zhonganbio/conf.d:/etc/nginx/conf.d:ro"
+      - "./environment/nginx/conf.d:/etc/nginx/conf.d:ro"
     # ======================================
     # - 映射主机端口
     ports:
@@ -34,13 +34,13 @@ services:
   node10:
     container_name: node10
     # ======================================
-    image: node:10-alpine
+    image: xrosy/node
     # ======================================
     # 从文件中获取环境变量，可以为单独的文件路径或列表。
     env_file: .env
     # ======================================
     # 以只读模式挂载容器的 root 文件系统
-    read_only: true
+    # read_only: true
     expose:
       - "3000"
     volumes:
