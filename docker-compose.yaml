@@ -49,7 +49,7 @@ services:
     volumes:
       - ./workspace/net.zuojiao.operation:/xrosy/net.zuojiao.operation
     working_dir: /xrosy/net.zuojiao.operation
-    command: "node -v"
+    command: "node"
     # ======================================
     # 设置环境变量。你可以使用数组或字典两种格式。
     # environment:
