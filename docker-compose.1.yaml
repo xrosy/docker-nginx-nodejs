@@ -1,31 +1,23 @@
 version: "3"
-
 services:
   nginx:
     container_name: nginx
     # ======================================
     # read_only: true
     # ======================================
-    image: "xrosy/nginx"
+    # build:
+    #     context: ./environment/nginx
+    #     dockerfile: Dockerfile
+    #
+    build  : ./environment/nginx
     # ======================================
-    restart: "always"
+    restart: always
     # ======================================
-    env_file: .env
+    volumes: ["./workspace:/xrosy/src:ro"]
     # ======================================
-    # - 工作目录
-    working_dir: /etc/nginx
+    ports  : ["80:80", "443:443"]
     # ======================================
-    # - 挂载主机目录
-    volumes:
-      - "./environment/com.zhonganbio/conf.d:/etc/nginx/conf.d:ro"
-    # ======================================
-    # - 映射主机端口
-    ports:
-      - "80:80"
-      - "443:443"
-    # ======================================
-    links:
-      - "node10"
+    links  : ["node10"]
 
 
 
