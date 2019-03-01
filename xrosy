@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+#  docker-compose -f "docker-compose.yaml" up -d --build
+#  docker-compose -f "docker-compose.yaml" down
+
+LoggerError ()
+{
+  echo -e "[ \033[31m✘\033[0m ] $*"
+}
+
+LoggerSuccess ()
+{
+  echo -e "[ \033[32m✔︎\033[0m ] $*"
+}
+
+
+docker=`type -P docker-compose`
+cwd=$(cd `dirname $0`; pwd)
+
+docker_compose_file="$cwd/docker-compose.yml"
+
+if [[ ! -ef $docker_compose_file ]]; then
+  LoggerError "没有配置文件 [ $docker_compose_file ]"
+  exit 127
+fi
+
+if [[ ! -ef $docker ]]; then
+  LoggerError "没有docker-compose"
+fi
+
+
+$docker ps --services

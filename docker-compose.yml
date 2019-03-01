@@ -1,60 +1,48 @@
 version: "3"
 
+
 services:
+  # ****************************************************************************
+  # 前置服务，用于请求的转发
   nginx:
-    image: xrosy/nginx:latest
-    # ======================================
     container_name: nginx
-    # ======================================
-    # read_only: true
-    # ======================================
-    # restart: "always"
-    # ======================================
+    image: xrosy/nginx:latest
     env_file: .env
-    # ======================================
+    # read_only: true
+    restart: "always"
+    # - 工作目录
+    working_dir: /etc/nginx
+    # - 挂载主机目录
     environment:
       ENV_NAME:
       SESSION_SECRET:
-    # ======================================
-    # - 挂载主机目录
     volumes:
-      - "./environment/nginx/conf.d:/etc/nginx/conf.d:ro"
-    # ======================================
-    # - 工作目录
-    working_dir: /etc/nginx
-    # ======================================
+      - "./service/nginx/conf.d:/etc/nginx/conf.d:ro"
     # - 映射主机端口
     ports:
       - "80:80"
       - "443:443"
-    # ======================================
     depends_on:
       - "node10"
-    # ======================================
     links:
       - "node10"
 
 
-
-
   # ****************************************************************************
+  # Node 服务
   node10:
-    image: xrosy/node:latest
-    # ======================================
     container_name: node
-    # ======================================
-    # 从文件中获取环境变量，可以为单独的文件路径或列表。
+    image: xrosy/node:latest
     env_file: .env
-    # ======================================
+    working_dir: /xrosy/net.zuojiao.operation
     # 以只读模式挂载容器的 root 文件系统
     # read_only: true
     expose:
       - "3000"
     volumes:
       - ./workspace/net.zuojiao.operation:/xrosy/net.zuojiao.operation
-    working_dir: /xrosy/net.zuojiao.operation
     command: "node"
-    # ======================================
+
     # 设置环境变量。你可以使用数组或字典两种格式。
     # environment:
     #   RACK_ENV: development
@@ -64,7 +52,7 @@ services:
     #   - RACK_ENV=development
     #   - SESSION_SECRET
 
-    # ======================================
+
     # 通过命令检查容器是否健康运行
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost"]
@@ -72,11 +60,11 @@ services:
     #   timeout: 10s
     #   retries: 3
 
-    # ======================================
+
     # environment:
     #     KEY_NAME: VALUE
 
-    # ======================================
+
     # 存储敏感数据
     # secrets:
     #   - db_root_password
