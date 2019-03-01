@@ -1,7 +1,0 @@
-{
-    "extends": "zals",
-    "rules": {
-        "no-console": [0],
-        "array-element-newline": [0, {"multiline": null, "minItems": null}]
-    }
-}
